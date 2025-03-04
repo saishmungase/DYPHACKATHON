@@ -1,4 +1,5 @@
-"use client"
+"use server"
+
 import Contact from "@/components/LandingPage/Contact"
 import Features from "@/components/LandingPage/Features"
 import Footer from "@/components/LandingPage/Footer"
