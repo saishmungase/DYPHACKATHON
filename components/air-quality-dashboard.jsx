@@ -19,11 +19,11 @@ import LocationCard from "./location-card"
 import SuggestionCard from "./suggestion-card"
 import WeatherCard from "./weather-card"
 
-const mockData = {
+export const mockData = {
   location: "San Francisco, CA",
-  aqi: 42,
+  aqi:  152,
   weather: {
-    temperature: 72,
+    temperature: 30,
     condition: "Sunny",
     humidity: 65,
     windSpeed: 8,

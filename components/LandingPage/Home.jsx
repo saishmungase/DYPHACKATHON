@@ -5,6 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { Cloud, Menu, X, ChevronDown } from "lucide-react";
 import { motion, useTransform, useScroll, useInView } from "framer-motion";
+import { redirect } from "next/navigation";
 
 function Home() {
   const { scrollYProgress } = useScroll();
@@ -59,7 +60,9 @@ function Home() {
             transition={{ duration: 0.8, delay: 0.6 }}
             className="flex flex-col sm:flex-row gap-4 justify-center"
           >
-            <button className="bg-green-600 hover:bg-green-700 text-white px-8 py-3 rounded-full font-medium transition-colors">
+            <button onClick={()=>{
+              redirect('/saish/dashboard/home');
+            }} className="bg-green-600 hover:bg-green-700 text-white px-8 py-3 rounded-full font-medium transition-colors">
               Get Started
             </button>
             <button className="border border-green-400 text-green-400 hover:bg-green-400/10 px-8 py-3 rounded-full font-medium transition-colors">

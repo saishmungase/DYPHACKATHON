@@ -10,10 +10,12 @@ function Header() {
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-black/80 backdrop-blur-md">
       <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-        <div className="flex items-center gap-2">
-          <Cloud className="text-green-400 h-8 w-8" />
-          <span className="font-bold text-xl">AlertX</span>
-        </div>
+      <div className="flex justify-center items-center">
+            <Link className="flex items-center gap-2" href = "/">
+              <Cloud className="text-green-400 h-8 w-8" />
+              <span className="font-bold text-xl">AlertX</span>
+            </Link>
+          </div>
 
         {/* Desktop Navigation */}
         <nav className="hidden md:flex gap-8">

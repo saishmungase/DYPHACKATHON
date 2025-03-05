@@ -8,6 +8,7 @@ const navItems = [
   { name: "Dashboard", href: "/123/dashboard/home", icon: LayoutDashboard },
   { name: "Locations", href: "/123/dashboard/locations", icon: MapPin },
   { name: "AI", href: "/123/dashboard/ai", icon: Image },
+  { name: "Shop", href: "/123/dashboard/shop", icon: Image }
 ]
 
 export default function Navbar() {
@@ -18,9 +19,11 @@ export default function Navbar() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16">
           <div className="flex">
-          <div className="flex items-center gap-2">
-            <Cloud className="text-green-400 h-8 w-8" />
-            <span className="font-bold text-xl text-black">AlertX</span>
+          <div className="flex justify-center items-center">
+            <Link className="flex items-center gap-2" href = "/">
+              <Cloud className="text-green-400 h-8 w-8" />
+              <span className="font-bold text-xl text-black">AlertX</span>
+            </Link>
           </div>
             <div className="hidden sm:ml-6 sm:flex sm:space-x-8">
               {navItems.map((item) => {
