@@ -21,7 +21,7 @@ import WeatherCard from "./weather-card"
 
 export const mockData = {
   location: "San Francisco, CA",
-  aqi:  152,
+  aqi:  20,
   weather: {
     temperature: 30,
     condition: "Sunny",
