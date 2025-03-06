@@ -130,8 +130,6 @@ const masks = [
 
 const aqi = mockData.aqi;
 
-console.log(aqi)
-
 var suggestedProduct = masks[0];
 
 for(var i = 0; i<masks.length; i++){
