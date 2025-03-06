@@ -1,6 +1,6 @@
-"use client"
+"use client";
 
-import { useState, useEffect } from "react"
+import { useState, useEffect } from "react";
 import {
   MapPin,
   Sun,
@@ -13,11 +13,12 @@ import {
   AlertCircle,
   ArrowUp,
   ArrowDown,
-} from "lucide-react"
-import AirQualityCard from "./air-quality-card"
-import LocationCard from "./location-card"
-import SuggestionCard from "./suggestion-card"
-import WeatherCard from "./weather-card"
+} from "lucide-react";
+import AirQualityCard from "./air-quality-card";
+import LocationCard from "./location-card";
+import SuggestionCard from "./suggestion-card";
+import WeatherCard from "./weather-card";
+import { useDashboardData, useWeatherData } from "@/hooks/fetchDashboard";
 
 export const mockData = {
   location: "San Francisco, CA",
@@ -44,33 +45,33 @@ export const mockData = {
   ],
 }
 
-const getAqiInfo = (aqi) => {
-  if (aqi <= 50) return { category: "Good", color: "bg-green-500", textColor: "text-green-500" }
-  if (aqi <= 100) return { category: "Moderate", color: "bg-yellow-500", textColor: "text-yellow-500" }
-  if (aqi <= 150)
-    return { category: "Unhealthy for Sensitive Groups", color: "bg-orange-500", textColor: "text-orange-500" }
-  if (aqi <= 200) return { category: "Unhealthy", color: "bg-red-500", textColor: "text-red-500" }
-  if (aqi <= 300) return { category: "Very Unhealthy", color: "bg-purple-500", textColor: "text-purple-500" }
-  return { category: "Hazardous", color: "bg-rose-800", textColor: "text-rose-800" }
-}
-
-const getWeatherIcon = (condition) => {
-  switch (condition.toLowerCase()) {
-    case "sunny":
-      return <Sun className="h-8 w-8 text-yellow-500" />
-    case "cloudy":
-      return <Cloud className="h-8 w-8 text-gray-500" />
-    case "rainy":
-      return <CloudRain className="h-8 w-8 text-blue-500" />
-    case "snowy":
-      return <CloudSnow className="h-8 w-8 text-blue-200" />
-    case "foggy":
-      return <CloudFog className="h-8 w-8 text-gray-400" />
-    default:
-      return <Sun className="h-8 w-8 text-yellow-500" />
+  const getAqiInfo = (aqi) => {
+    if (aqi <= 50) return { category: "Good", color: "bg-green-500", textColor: "text-green-500" }
+    if (aqi <= 100) return { category: "Moderate", color: "bg-yellow-500", textColor: "text-yellow-500" }
+    if (aqi <= 150)
+      return { category: "Unhealthy for Sensitive Groups", color: "bg-orange-500", textColor: "text-orange-500" }
+    if (aqi <= 200) return { category: "Unhealthy", color: "bg-red-500", textColor: "text-red-500" }
+    if (aqi <= 300) return { category: "Very Unhealthy", color: "bg-purple-500", textColor: "text-purple-500" }
+    return { category: "Hazardous", color: "bg-rose-800", textColor: "text-rose-800" }
   }
-}
 
+  const getWeatherIcon = (condition) => {
+    switch (condition) {
+      case "sun":
+        return <Sun className="h-8 w-8 text-yellow-500" />
+      case "cloud":
+        return <Cloud className="h-8 w-8 text-gray-500" />
+      case "rain":
+        return <CloudRain className="h-8 w-8 text-blue-500" />
+      case "snow":
+        return <CloudSnow className="h-8 w-8 text-blue-200" />
+      case "fog":
+        return <CloudFog className="h-8 w-8 text-gray-400" />
+      default:
+        return <Sun className="h-8 w-8 text-yellow-500" />
+    }
+  }
+  
 const getAiSuggestion = (aqi, weather) => {
   if (aqi <= 50) {
     return "Air quality is good! It's a great day for outdoor activities."
@@ -83,31 +84,8 @@ const getAiSuggestion = (aqi, weather) => {
   }
 }
 
-export default function AirQualityDashboard() {
-  const [data, setData] = useState(mockData)
-  const [loading, setLoading] = useState(true)
-
-  useEffect(() => {
-    const fetchData = async () => {
-      setTimeout(() => {
-        setData(mockData)
-        setLoading(false)
-      }, 1000)
-    }
-
-    fetchData()
-  }, [])
-
-  const aqiInfo = getAqiInfo(data.aqi)
-  const aiSuggestion = getAiSuggestion(data.aqi, data.weather)
-
-  if (loading) {
-    return (
-      <div className="flex items-center justify-center min-h-[60vh]">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-green-500"></div>
-      </div>
-    )
-  }
+  const aqiInfo = getAqiInfo(data.aqi);
+  const aiSuggestion = getAiSuggestion(data.aqi, data.weather);
 
   return (
     <div className="max-w-7xl mx-auto">
@@ -120,10 +98,8 @@ export default function AirQualityDashboard() {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-
         <AirQualityCard aqi={data.aqi} aqiInfo={aqiInfo} />
-
-        <WeatherCard weather={data.weather} getWeatherIcon={getWeatherIcon} />
+        <WeatherCard weather={data.weather} getWeatherIcon={getWeatherIcon(data.weather.condition)} />
 
         <div className="bg-white rounded-lg shadow-md p-4 overflow-hidden">
           <h2 className="text-lg font-semibold text-gray-800 mb-3">Air Pollutants</h2>
@@ -134,9 +110,7 @@ export default function AirQualityDashboard() {
                   <AlertCircle className="h-4 w-4 mr-2 text-gray-500" />
                   <span className="text-gray-700">{substance.name}</span>
                 </div>
-                <span className="font-medium text-gray-800">
-                  {substance.value} {substance.unit}
-                </span>
+                <span className="font-medium text-gray-800">{substance.value}</span>
               </div>
             ))}
           </div>
@@ -157,9 +131,9 @@ export default function AirQualityDashboard() {
           iconDirection={<ArrowUp className="h-4 w-4 text-red-500" />}
           textColor="text-red-500"
         />
+        
         <SuggestionCard suggestion={aiSuggestion} aqi={data.aqi} />
       </div>
     </div>
-  )
+  );
 }
-

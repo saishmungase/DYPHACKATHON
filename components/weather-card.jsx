@@ -2,7 +2,7 @@
 import { Droplets, Wind } from "lucide-react"
 
 
-export default function WeatherCard({ weather, getWeatherIcon }) {
+export default function WeatherCard({weather, getWeatherIcon}) {
   return (
     <div className="bg-white rounded-lg shadow-md p-4 overflow-hidden">
       <h2 className="text-lg font-semibold text-gray-800 mb-3">Weather Conditions</h2>
@@ -11,7 +11,7 @@ export default function WeatherCard({ weather, getWeatherIcon }) {
           <div className="text-3xl font-bold text-gray-800">{weather.temperature}°F</div>
           <div className="text-gray-600">{weather.condition}</div>
         </div>
-        {getWeatherIcon(weather.condition)}
+        {getWeatherIcon}
       </div>
       <div className="space-y-3">
         <div className="flex items-center">
