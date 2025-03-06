@@ -2,13 +2,14 @@
 
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { LayoutDashboard, MapPin, Image, Cloud } from "lucide-react"
+import { LayoutDashboard, MapPin, Image, Cloud, Store, GitGraph } from "lucide-react"
 
 const navItems = [
   { name: "Dashboard", href: "/123/dashboard/home", icon: LayoutDashboard },
   { name: "Locations", href: "/123/dashboard/locations", icon: MapPin },
   { name: "AI", href: "/123/dashboard/ai", icon: Image },
-  { name: "Shop", href: "/123/dashboard/shop", icon: Image }
+  { name: "Shop", href: "/123/dashboard/shop", icon: Store },
+  { name: "Graph", href: "/123/dashboard/graph", icon: GitGraph }
 ]
 
 export default function Navbar() {
