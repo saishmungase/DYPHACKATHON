@@ -48,7 +48,7 @@ import { Select } from "@/components/ui/select";
 export const AQIGraph = () => {
     const [city, setCity] = useState("Delhi");
     const [data, setData] = useState([]);
-    const API_KEY = "YOUR_API_KEY"; // Replace with your API key
+    const API_KEY = "fcfe29295e96d71c262ff76d89552bab"; // Replace with your API key
     const cities = {
         Delhi: { lat: 28.6139, lon: 77.2090 },
         Mumbai: { lat: 19.0760, lon: 72.8777 },
@@ -70,7 +70,7 @@ export const AQIGraph = () => {
 
             setData((prevData) => [
                 ...prevData.slice(-11), // Keep last 12 data points
-                { name: timestamp, AQI: aqi * 50 }, // Scale AQI for better visibility
+                { name: timestamp, AQI: aqi * 50  }, // Scale AQI for better visibility
             ]);
         } catch (error) {
             console.error("Error fetching AQI data:", error);

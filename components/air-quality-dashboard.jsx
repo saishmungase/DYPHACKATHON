@@ -21,29 +21,52 @@ import WeatherCard from "./weather-card";
 import { useDashboardData, useWeatherData } from "@/hooks/fetchDashboard";
 
 export const mockData = {
-  location: "San Francisco, CA",
-  aqi:  20,
-  weather: {
-    temperature: 30,
-    condition: "Sunny",
-    humidity: 65,
-    windSpeed: 8,
-  },
-  substances: [
-    { name: "PM2.5", value: 12, unit: "μg/m³" },
-    { name: "PM10", value: 25, unit: "μg/m³" },
-    { name: "O3", value: 35, unit: "ppb" },
-    { name: "NO2", value: 15, unit: "ppb" },
-  ],
-  cleanerAreas: [
-    { name: "Golden Gate Park", aqi: 32, distance: "2.5 miles" },
-    { name: "Ocean Beach", aqi: 28, distance: "4.1 miles" },
-  ],
-  pollutedAreas: [
-    { name: "Downtown", aqi: 58, distance: "1.2 miles" },
-    { name: "Industrial District", aqi: 67, distance: "3.8 miles" },
-  ],
+  'aqi' : 152
 }
+
+export default function AirQualityDashboard() {
+  const aqiData = useDashboardData();
+  const weather = useWeatherData();
+  const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    if (aqiData) {
+      setData({
+        location: "San Francisco, CA",
+        aqi: aqiData ? 152 : 0, 
+        weather: {
+          temperature: weather?.temp,
+          condition: weather?.weather,
+          humidity: weather?.humidity,
+          windSpeed: weather?.wind,
+        },
+        substances: [
+          { name: "CO", value: aqiData?.co },
+          { name: "PM10", value: aqiData?.pm10 },
+          { name: "O3", value: aqiData?.o3 },
+          { name: "NO2", value: aqiData?.no2 },
+        ],
+        cleanerAreas: [
+          { name: "Golden Gate Park", aqi: 32, distance: "2.5 miles" },
+          { name: "Ocean Beach", aqi: 28, distance: "4.1 miles" },
+        ],
+        pollutedAreas: [
+          { name: "Downtown", aqi: 58, distance: "1.2 miles" },
+          { name: "Industrial District", aqi: 67, distance: "3.8 miles" },
+        ],
+      });
+      setLoading(false);
+    }
+  }, [aqiData]);
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center min-h-[60vh]">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-green-500"></div>
+      </div>
+    );
+  }
 
   const getAqiInfo = (aqi) => {
     if (aqi <= 50) return { category: "Good", color: "bg-green-500", textColor: "text-green-500" }
@@ -136,4 +159,4 @@ const getAiSuggestion = (aqi, weather) => {
       </div>
     </div>
   );
-}
+} 
