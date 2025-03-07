@@ -8,7 +8,7 @@ export default function WeatherCard({weather, getWeatherIcon}) {
       <h2 className="text-lg font-semibold text-gray-800 mb-3">Weather Conditions</h2>
       <div className="flex items-center justify-between mb-4">
         <div>
-          <div className="text-3xl font-bold text-gray-800">{weather.temperature}°F</div>
+          <div className="text-3xl font-bold text-gray-800">{weather.temperature}°C</div>
           <div className="text-gray-600">{weather.condition}</div>
         </div>
         {getWeatherIcon}
