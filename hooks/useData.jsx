@@ -11,11 +11,14 @@ function useDataDash() {
             const cityData = await getCityInfo('pune');
             setData(cityData);
         };
-
         fetchData();
-    }, []); // Empty dependency array ensures this runs only once on mount
+    }, []);
 
-    return data;
+    if(data){
+        return data
+    }
+    const storedData = localStorage.getItem("aqiData");
+    return storedData ? JSON.parse(storedData) : null;
 }
 
 export default useDataDash;

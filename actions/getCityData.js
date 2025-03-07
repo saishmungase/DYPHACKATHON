@@ -13,7 +13,7 @@ async function getCityInfo(city) {
         "humidity" : data.main.humidity,
         "wind" : data.wind.speed,
     }
-
+    
     return result;
 }
 
