@@ -32,17 +32,21 @@ export const cityName = () =>{
 export default function AirQualityDashboard() {
   const aqiData = useDashboardData();
   const weather = useWeatherData();
+  const [aqi, setAQI] = useState("0");
   const nature = useDataDash();
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [city, setCity] = useState("");
+  const [currCity, setCurrCity] = useState("New York");
 
   useEffect(() => {
     localStorage.setItem("cityName",  nature?.city || "Unknown")
+    setAQI(Number(localStorage.getItem("recentPrevious")));
+    setCurrCity(localStorage.getItem("cityName"));
     if (aqiData) {
       const updatedData = {
-        location: nature?.city || "Unknown",
-        aqi: aqiData ? 152 : 0,
+        location: currCity? currCity : "Mumbai",
+        aqi: aqi? aqi : 0,
         weather: {
           temperature: nature?.temp,
           condition: nature?.weather,
@@ -80,12 +84,11 @@ export default function AirQualityDashboard() {
   }
 
   const getAqiInfo = (aqi) => {
-    if (aqi <= 50) return { category: "Good", color: "bg-green-500", textColor: "text-green-500" };
-    if (aqi <= 100) return { category: "Moderate", color: "bg-yellow-500", textColor: "text-yellow-500" };
-    if (aqi <= 150)
+    if (aqi <= 1) return { category: "Good", color: "bg-green-500", textColor: "text-green-500" };
+    if (aqi <= 2) return { category: "Moderate", color: "bg-yellow-500", textColor: "text-yellow-500" };
+    if (aqi <= 4)
       return { category: "Unhealthy for Sensitive Groups", color: "bg-orange-500", textColor: "text-orange-500" };
-    if (aqi <= 200) return { category: "Unhealthy", color: "bg-red-500", textColor: "text-red-500" };
-    if (aqi <= 300) return { category: "Very Unhealthy", color: "bg-purple-500", textColor: "text-purple-500" };
+    if (aqi <= 5) return { category: "Unhealthy", color: "bg-red-500", textColor: "text-red-500" };
     return { category: "Hazardous", color: "bg-rose-800", textColor: "text-rose-800" };
   };
 
@@ -107,11 +110,11 @@ export default function AirQualityDashboard() {
   };
 
   const getAiSuggestion = (aqi) => {
-    if (aqi <= 50) {
+    if (aqi <= 1) {
       return "Air quality is good! It's a great day for outdoor activities.";
-    } else if (aqi <= 100) {
+    } else if (aqi <= 3) {
       return "Air quality is moderate. Most people can be outside, but consider reducing prolonged outdoor exertion if you're sensitive to air pollution.";
-    } else if (aqi <= 150) {
+    } else if (aqi <= 5) {
       return "Air quality is unhealthy for sensitive groups. Consider limiting outdoor activities, especially if you have respiratory issues.";
     } else {
       return "Air quality is unhealthy. It's recommended to stay indoors and keep windows closed. Use air purifiers if available.";
@@ -127,7 +130,7 @@ export default function AirQualityDashboard() {
         <h1 className="text-2xl md:text-3xl font-bold text-white">Air Quality Dashboard</h1>
         <div className="flex items-center mt-2 text-green-400">
           <MapPin className="h-5 w-5 mr-2" />
-          <span>{city}</span>
+          <span>{currCity}</span>
         </div>
       </div>
 
