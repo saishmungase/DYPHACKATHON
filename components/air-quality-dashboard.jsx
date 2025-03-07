@@ -59,6 +59,7 @@ export default function AirQualityDashboard() {
         ],
       });
       setLoading(false);
+      console.log(data)
     }
   }, [aqiData]);
 

@@ -13,7 +13,6 @@ function useDataDash() {
         };
 
         fetchData();
-        console.log(data)
     }, []); // Empty dependency array ensures this runs only once on mount
 
     return data;
