@@ -15,7 +15,7 @@ async function getCurrentAQIData(lat, lon) {
   }
 
   
-  export async function getWeatherAQIData(lat, lon) {
+export async function getWeatherAQIData(lat, lon) {
     try {
       const response = await fetch(
         `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=fcfe29295e96d71c262ff76d89552bab`
@@ -24,7 +24,7 @@ async function getCurrentAQIData(lat, lon) {
         throw new Error(`API Error: ${response.status} - ${response.statusText}`);
       }
       const data = await response.json();
-      return {
+      return {  
         'weather' : data.weather.main,
         'wind' : data.wind.speed,
         'humidity' : data.main.humadity,

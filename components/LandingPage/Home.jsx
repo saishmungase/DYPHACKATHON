@@ -61,7 +61,7 @@ function Home() {
             className="flex flex-col sm:flex-row gap-4 justify-center"
           >
             <button onClick={()=>{
-              redirect('/saish/dashboard/home');
+              redirect('/');
             }} className="bg-green-600 hover:bg-green-700 text-white px-8 py-3 rounded-full font-medium transition-colors">
               Get Started
             </button>

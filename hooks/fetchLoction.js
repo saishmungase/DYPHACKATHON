@@ -19,7 +19,8 @@ export function useUserCoords() {
         }
       );
     }
-  }, []);
+    localStorage.setItem("coords", coords);
+  }, [coords]);
 
   return coords;
 }

@@ -19,6 +19,7 @@ import LocationCard from "./location-card";
 import SuggestionCard from "./suggestion-card";
 import WeatherCard from "./weather-card";
 import { useDashboardData, useWeatherData } from "@/hooks/fetchDashboard";
+import useDataDash from "@/hooks/useData";
 
 export const mockData = {
   'aqi' : 152
@@ -29,17 +30,18 @@ export default function AirQualityDashboard() {
   const weather = useWeatherData();
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
+  const nature = useDataDash();
 
   useEffect(() => {
     if (aqiData) {
       setData({
-        location: "San Francisco, CA",
+        location: nature?.city,
         aqi: aqiData ? 152 : 0, 
         weather: {
-          temperature: weather?.temp,
-          condition: weather?.weather,
-          humidity: weather?.humidity,
-          windSpeed: weather?.wind,
+          temperature: nature?.temp,
+          condition: nature?.weather,
+          humidity: nature?.humidity,
+          windSpeed: nature?.wind,
         },
         substances: [
           { name: "CO", value: aqiData?.co },
@@ -57,6 +59,7 @@ export default function AirQualityDashboard() {
         ],
       });
       setLoading(false);
+      console.log(data)
     }
   }, [aqiData]);
 
@@ -159,4 +162,4 @@ const getAiSuggestion = (aqi, weather) => {
       </div>
     </div>
   );
-} 
+}
