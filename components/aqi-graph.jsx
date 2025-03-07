@@ -6,6 +6,9 @@ import {
 } from "recharts";
 import axios from "axios";
 import { Select } from "@/components/ui/select";
+import SendWhatsApp from "@/actions/aqiChange";
+import useWhatsApp from "@/hooks/message";
+import sendWhatsAppMessage from "@/actions/aqiChange";
 
 export const AQIGraph = () => {
     const [city, setCity] = useState("mumbai");
@@ -31,11 +34,13 @@ export const AQIGraph = () => {
             const result = await response.json();
             const aqi = result.list[0]?.main?.aqi || 1;
             const timestamp = new Date().toLocaleTimeString();
-
+            if(aqi != localStorage.getItem("recentPrevious")){
+                sendWhatsAppMessage(aqi);
+            }
             const storedData = JSON.parse(localStorage.getItem(`graphData-${city}`) || "[]");
             const newData = [...storedData, { name: timestamp, AQI: (aqi) }];
             if (newData.length > 10) newData.shift();
-
+            localStorage.setItem("recentPrevious", aqi);
             setData(newData);
             localStorage.setItem(`graphData-${city}`, JSON.stringify(newData));
         } catch (error) {
