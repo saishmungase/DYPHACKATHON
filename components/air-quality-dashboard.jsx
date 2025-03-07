@@ -22,21 +22,27 @@ import { useDashboardData, useWeatherData } from "@/hooks/fetchDashboard";
 import useDataDash from "@/hooks/useData";
 
 export const mockData = {
-  'aqi' : 152
+  aqi: 152,
+};
+
+export const cityName = () =>{
+  return (localStorage.getItem("cityName")).toLowerCase;
 }
 
 export default function AirQualityDashboard() {
   const aqiData = useDashboardData();
   const weather = useWeatherData();
+  const nature = useDataDash();
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
-  const nature = useDataDash();
+  const [city, setCity] = useState("");
 
   useEffect(() => {
+    localStorage.setItem("cityName",  nature?.city || "Unknown")
     if (aqiData) {
-      setData({
-        location: nature?.city,
-        aqi: aqiData ? 152 : 0, 
+      const updatedData = {
+        location: nature?.city || "Unknown",
+        aqi: aqiData ? 152 : 0,
         weather: {
           temperature: nature?.temp,
           condition: nature?.weather,
@@ -57,11 +63,13 @@ export default function AirQualityDashboard() {
           { name: "Downtown", aqi: 58, distance: "1.2 miles" },
           { name: "Industrial District", aqi: 67, distance: "3.8 miles" },
         ],
-      });
+      };
+
+      setData(updatedData);
+      setCity(nature?.city || "Unknown");
       setLoading(false);
-      console.log(data)
     }
-  }, [aqiData]);
+  }, [aqiData, nature]);
 
   if (loading) {
     return (
@@ -72,46 +80,46 @@ export default function AirQualityDashboard() {
   }
 
   const getAqiInfo = (aqi) => {
-    if (aqi <= 50) return { category: "Good", color: "bg-green-500", textColor: "text-green-500" }
-    if (aqi <= 100) return { category: "Moderate", color: "bg-yellow-500", textColor: "text-yellow-500" }
+    if (aqi <= 50) return { category: "Good", color: "bg-green-500", textColor: "text-green-500" };
+    if (aqi <= 100) return { category: "Moderate", color: "bg-yellow-500", textColor: "text-yellow-500" };
     if (aqi <= 150)
-      return { category: "Unhealthy for Sensitive Groups", color: "bg-orange-500", textColor: "text-orange-500" }
-    if (aqi <= 200) return { category: "Unhealthy", color: "bg-red-500", textColor: "text-red-500" }
-    if (aqi <= 300) return { category: "Very Unhealthy", color: "bg-purple-500", textColor: "text-purple-500" }
-    return { category: "Hazardous", color: "bg-rose-800", textColor: "text-rose-800" }
-  }
+      return { category: "Unhealthy for Sensitive Groups", color: "bg-orange-500", textColor: "text-orange-500" };
+    if (aqi <= 200) return { category: "Unhealthy", color: "bg-red-500", textColor: "text-red-500" };
+    if (aqi <= 300) return { category: "Very Unhealthy", color: "bg-purple-500", textColor: "text-purple-500" };
+    return { category: "Hazardous", color: "bg-rose-800", textColor: "text-rose-800" };
+  };
 
   const getWeatherIcon = (condition) => {
     switch (condition) {
       case "sun":
-        return <Sun className="h-8 w-8 text-yellow-500" />
+        return <Sun className="h-8 w-8 text-yellow-500" />;
       case "cloud":
-        return <Cloud className="h-8 w-8 text-gray-500" />
+        return <Cloud className="h-8 w-8 text-gray-500" />;
       case "rain":
-        return <CloudRain className="h-8 w-8 text-blue-500" />
+        return <CloudRain className="h-8 w-8 text-blue-500" />;
       case "snow":
-        return <CloudSnow className="h-8 w-8 text-blue-200" />
+        return <CloudSnow className="h-8 w-8 text-blue-200" />;
       case "fog":
-        return <CloudFog className="h-8 w-8 text-gray-400" />
+        return <CloudFog className="h-8 w-8 text-gray-400" />;
       default:
-        return <Sun className="h-8 w-8 text-yellow-500" />
+        return <Sun className="h-8 w-8 text-yellow-500" />;
     }
-  }
-  
-const getAiSuggestion = (aqi, weather) => {
-  if (aqi <= 50) {
-    return "Air quality is good! It's a great day for outdoor activities."
-  } else if (aqi <= 100) {
-    return "Air quality is moderate. Most people can be outside, but consider reducing prolonged outdoor exertion if you're sensitive to air pollution."
-  } else if (aqi <= 150) {
-    return "Air quality is unhealthy for sensitive groups. Consider limiting outdoor activities, especially if you have respiratory issues."
-  } else {
-    return "Air quality is unhealthy. It's recommended to stay indoors and keep windows closed. Use air purifiers if available."
-  }
-}
+  };
 
-  const aqiInfo = getAqiInfo(data.aqi);
-  const aiSuggestion = getAiSuggestion(data.aqi, data.weather);
+  const getAiSuggestion = (aqi) => {
+    if (aqi <= 50) {
+      return "Air quality is good! It's a great day for outdoor activities.";
+    } else if (aqi <= 100) {
+      return "Air quality is moderate. Most people can be outside, but consider reducing prolonged outdoor exertion if you're sensitive to air pollution.";
+    } else if (aqi <= 150) {
+      return "Air quality is unhealthy for sensitive groups. Consider limiting outdoor activities, especially if you have respiratory issues.";
+    } else {
+      return "Air quality is unhealthy. It's recommended to stay indoors and keep windows closed. Use air purifiers if available.";
+    }
+  };
+
+  const aqiInfo = data ? getAqiInfo(data.aqi) : null;
+  const aiSuggestion = data ? getAiSuggestion(data.aqi) : "";
 
   return (
     <div className="max-w-7xl mx-auto">
@@ -119,7 +127,7 @@ const getAiSuggestion = (aqi, weather) => {
         <h1 className="text-2xl md:text-3xl font-bold text-white">Air Quality Dashboard</h1>
         <div className="flex items-center mt-2 text-green-400">
           <MapPin className="h-5 w-5 mr-2" />
-          <span>{data.location}</span>
+          <span>{city}</span>
         </div>
       </div>
 
@@ -157,7 +165,7 @@ const getAiSuggestion = (aqi, weather) => {
           iconDirection={<ArrowUp className="h-4 w-4 text-red-500" />}
           textColor="text-red-500"
         />
-        
+
         <SuggestionCard suggestion={aiSuggestion} aqi={data.aqi} />
       </div>
     </div>

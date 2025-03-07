@@ -128,6 +128,39 @@ const masks = [
   }
 ];
 
+const purifier = [
+  {
+    "id": 1,
+    "name": "Airinum Urban Air Mask 2.0",
+    "img": "/masks/Airinum_Urban_Air_Mask.png",
+    "description": "Advanced pollution mask with multi-layer filters, protecting against PM2.5, viruses, and bacteria.",
+    "minAQI" : 400,
+    "maxAQI": 500,
+    "price": "₹10,000"
+  } 
+]
+
+
+const conditioner = [
+  {
+    "id": 1,
+    "name": "Airinum Urban Air Mask 2.0",
+    "img": "/masks/Airinum_Urban_Air_Mask.png",
+    "description": "Advanced pollution mask with multi-layer filters, protecting against PM2.5, viruses, and bacteria.",
+    "price": "₹10,000"
+  } 
+]
+
+const meters = [
+  {
+    "id": 1,
+    "name": "Airinum Urban Air Mask 2.0",
+    "img": "/masks/Airinum_Urban_Air_Mask.png",
+    "description": "Advanced pollution mask with multi-layer filters, protecting against PM2.5, viruses, and bacteria.",
+    "price": "₹10,000"
+  } 
+]
+
 const aqi = mockData.aqi;
 
 var suggestedProduct = masks[0];
