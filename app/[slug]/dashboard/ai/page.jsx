@@ -180,10 +180,6 @@
 // }
 import GeminiChatbot from '@/components/chatbot';
 import AQIPredictionDashboard from '@/components/testing';
-export default function TestingDashboardPage({Component , pageProps}) {
-  return (
-    <>
-     <AQIPredictionDashboard />
-     </>
-     );
+export default function TestingDashboardPage() {
+  return   <AQIPredictionDashboard />  
 }

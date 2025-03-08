@@ -129,37 +129,36 @@ const masks = [
   },
 ]
 
-// Update the purifiers array to include minAQI and maxAQI for all items
 const purifiers = [
   {
     id: 1,
-    name: "Basic Air Purifier",
-    img: "/purifiers/basic-purifier.png",
-    description: "Entry-level air purifier suitable for small rooms up to 200 sq ft.",
+    name: "Honeywell Air Purifier",
+    img: "/purifiers/Honeywell Airpurifier.jpg",
+    description: "Entry-level air purifier suitable for small rooms up to 235 sq ft.",
     protection_level: "Basic",
     minAQI: 0,
     maxAQI: 100,
-    price: "₹5,000",
+    price: "₹4,999/-",
   },
   {
     id: 2,
-    name: "HEPA Air Purifier",
-    img: "/purifiers/hepa-purifier.png",
-    description: "Mid-range purifier with true HEPA filter for medium-sized rooms.",
+    name: "Honeywell Air Purifier",
+    img: "/purifiers/Honeywell Airpurifier 1.jpg",
+    description: "Mid-range purifier with true H13 HEPA filter for medium-sized rooms.",
     protection_level: "Moderate",
     minAQI: 101,
     maxAQI: 200,
-    price: "₹12,000",
+    price: "₹9,999/-",
   },
   {
     id: 3,
-    name: "Premium Air Purifier",
-    img: "/purifiers/premium-purifier.png",
-    description: "Advanced purifier with HEPA, activated carbon, and UV sterilization.",
+    name: "Dyson Premium Air Purifier",
+    img: "/purifiers/DYSON.jpg",
+    description: "Removes 99.95% of allergens & pollutants as small as PM 0.1",
     protection_level: "High",
     minAQI: 201,
     maxAQI: 500,
-    price: "₹25,000",
+    price: "₹33,999/-",
   },
 ]
 
@@ -167,19 +166,19 @@ const purifiers = [
 const conditioners = [
   {
     id: 1,
-    name: "Standard AC with Filter",
-    img: "/conditioners/standard-ac.png",
-    description: "Basic air conditioner with built-in dust filter.",
-    protection_level: "Basic",
+    name: "Haier Air Conditioner+Purifier",
+    img: "/conditioner/Haier.jpg",
+    description: "4-star triple inverter Air Conditioner+Purifier",
+    protection_level: "Moderate",
     minAQI: 0,
     maxAQI: 150,
-    price: "₹30,000",
+    price: "₹39,999/-",
   },
   {
     id: 2,
-    name: "Smart AC with Air Purification",
-    img: "/conditioners/smart-ac.png",
-    description: "Smart air conditioner with integrated air purification system.",
+    name: "Panasonic Air Conditioner+Purifier",
+    img: "/conditioner/Panasonic 2.jpg",
+    description: "5 Star Wi-Fi Inverter Smart Split AC",
     protection_level: "Moderate",
     minAQI: 151,
     maxAQI: 300,
@@ -187,13 +186,13 @@ const conditioners = [
   },
   {
     id: 3,
-    name: "Premium AC with HEPA Filter",
-    img: "/conditioners/premium-ac.png",
+    name: "Lloyd Stellar Air conditioner+purifier",
+    img: "/conditioner/Ac 58300.jpg",
     description: "High-end air conditioner with HEPA filtration and air quality monitoring.",
     protection_level: "High",
     minAQI: 301,
     maxAQI: 500,
-    price: "₹60,000",
+    price: "₹59,999/-",
   },
 ]
 
@@ -201,33 +200,32 @@ const conditioners = [
 const meters = [
   {
     id: 1,
-    name: "Basic Air Quality Monitor",
-    img: "/meters/basic-monitor.png",
-    description: "Simple device to measure PM2.5 and PM10 levels.",
+    name: "Rishvik Smart Home AQI Monitor",
+    img: "/meters/Rishvik Meter.jpg",
+    description: "Smart Home AQI Monitor Temperature and Humidity Monitoring with Digital Display",
     minAQI: 0,
     maxAQI: 200,
-    price: "₹2,000",
+    price: "₹3,499/-",
   },
   {
     id: 2,
-    name: "Multi-Parameter AQI Monitor",
-    img: "/meters/multi-monitor.png",
-    description: "Advanced monitor measuring PM2.5, PM10, VOCs, and humidity.",
+    name: "AmiciSense Digital Air Quality Monitor",
+    img: "/meters/AQI meter 2 5999.jpg",
+    description: "Air Carbon Dioxide CO2 Display, Temperature & Humidity Tracker for Healthier Living.",
     minAQI: 201,
     maxAQI: 350,
-    price: "₹5,000",
+    price: "₹5,999/-",
   },
   {
     id: 3,
-    name: "Professional Air Quality Station",
-    img: "/meters/pro-monitor.png",
-    description: "Professional-grade monitoring station with data logging and app connectivity.",
+    name: "INKBIRD Bluetooth Thermometer & Hygrometer",
+    img: "/meters/INKBIRD meter.jpg",
+    description: "Smart Sensor Temp and Humidity Monitor with Alerts Calibration Interval Setting Graph and Data Export Temperature & Humidity Data Logger.",
     minAQI: 351,
     maxAQI: 500,
-    price: "₹12,000",
+    price: "₹1,199/-",
   },
 ]
-
 const aqi = mockData.aqi
 
 // Replace the existing getSuggestedMask and getSuggestedPurifier functions with a generic one
