@@ -6,8 +6,7 @@ import L from 'leaflet';
 
 const MapComponent = () => {
   useEffect(() => {
-    let map;
-
+    let map;    
     const initMap = () => {
       // Check if the map container is already initialized
       const container = L.DomUtil.get('map');
@@ -16,7 +15,7 @@ const MapComponent = () => {
       }
 
       // Initialize the map
-      map = L.map('map').setView([18.5204, 73.8567], 11);
+      map = L.map('map').setView([19.0760, 72.8777], 11);
 
       // Add OpenStreetMap layer
       const OSM_URL = 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';

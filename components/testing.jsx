@@ -1,232 +1,483 @@
-"use client"
+// "use client";
 
-import React, { useState, useEffect } from 'react';
-import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Table, TableHeader, TableRow, TableHead, TableBody, TableCell } from '@/components/ui/table';
-import { Input } from '@/components/ui/input';
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
-import { Upload, FileText, AlertTriangle } from 'lucide-react';
+// import React, { useState } from "react";
+// import { GoogleGenerativeAI } from "@google/generative-ai";
 
-const AQIPredictionDashboard = () => {
-  const [aqiData, setAqiData] = useState([]);
-  const [prediction, setPrediction] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(null);
-  const [apiKey, setApiKey] = useState('');
+// const AQIPredictor = () => {
+//   const [date, setDate] = useState("");
+//   const [aqi, setAqi] = useState(null);
+//   const [loading, setLoading] = useState(false);
+//   const [error, setError] = useState("");
 
-  // Mock function to parse Excel file
-  const parseExcelFile = async (file) => {
-    setIsLoading(true);
-    setError(null);
-    
-    try {
-      // In a real implementation, you'd use a library like xlsx
-      // For this example, we'll simulate with mock data
-      const mockData = generateMockAqiData();
-      setAqiData(mockData);
-      return mockData;
-    } catch (err) {
-      setError("Failed to parse Excel file: " + err.message);
-      return [];
-    } finally {
-      setIsLoading(false);
-    }
+//   // Replace with your actual Gemini API key (store this securely!)
+//   const GEMINI_API_KEY = "AIzaSyAn9cyC74o_2v0qflu-tBomvsz-MwPjTk4";
+
+//   const handlePrediction = async () => {
+//     if (!date) {
+//       setError("Please select a date");
+//       return;
+//     }
+
+//     setLoading(true);
+//     setError("");
+//     setAqi(null);
+
+//     try {
+//       // Initialize the Gemini AI model
+//       const genAI = new GoogleGenerativeAI(GEMINI_API_KEY);
+//       const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+
+//       // Corrected API call format
+//       const prompt = `So what was the aqi for the date forgot about 2025 give me the data of 2024: ${date}.`;
+//       const result = await model.generateContent({
+//         contents: [{ role: "user", parts: [{ text: prompt }] }], // Correct input format
+//         generationConfig: { maxOutputTokens: 100, temperature: 0.7 },
+//       });
+
+//       // Extract and display the AQI result
+//       const predictedAqi =
+//         result.response?.candidates?.[0]?.content?.parts?.[0]?.text || "No data";
+//       setAqi(predictedAqi);
+//     } catch (err) {
+//       console.error("Error fetching AQI prediction:", err);
+//       setError("Failed to fetch AQI prediction. Please try again.");
+//     } finally {
+//       setLoading(false);
+//     }
+//   };
+
+//   return (
+//     <div style={{ padding: "20px", fontFamily: "Arial, sans-serif" }}>
+//       <h1>AQI Predictor</h1>
+//       <div>
+//         <label>
+//           Select Date:
+//           <input
+//             type="date"
+//             value={date}
+//             onChange={(e) => setDate(e.target.value)}
+//           />
+//         </label>
+//         <button onClick={handlePrediction} disabled={loading}>
+//           {loading ? "Predicting..." : "Predict AQI"}
+//         </button>
+//       </div>
+
+//       {error && <p style={{ color: "red" }}>{error}</p>}
+//       {aqi && (
+//         <div>
+//           <h2>Predicted AQI</h2>
+//           <p>{aqi}</p>
+//         </div>
+//       )}
+//     </div>
+//   );
+// };
+
+// export default AQIPredictor;
+
+
+// "use client";
+
+// import React, { useState } from "react";
+// import { GoogleGenerativeAI } from "@google/generative-ai";
+
+// const AQIPredictor = () => {
+//   const [date, setDate] = useState("");
+//   const [city, setCity] = useState("");
+//   const [aqi, setAqi] = useState(null);
+//   const [loading, setLoading] = useState(false);
+//   const [error, setError] = useState("");
+
+//   // Dummy AQI data for the last 7 days (Replace with real API data if available)
+//   const lastSevenDaysAQI = {
+//     "2024-03-01": 120,
+//     "2024-03-02": 110,
+//     "2024-03-03": 105,
+//     "2024-03-04": 115,
+//     "2024-03-05": 130,
+//     "2024-03-06": 125,
+//     "2024-03-07": 118,
+//   };
+
+//   // Replace with a secure environment variable in production
+//   const GEMINI_API_KEY = "AIzaSyAn9cyC74o_2v0qflu-tBomvsz-MwPjTk4";
+
+//   const handlePrediction = async () => {
+//     if (!date || !city) {
+//       setError("Please select a date and enter a city");
+//       return;
+//     }
+
+//     setLoading(true);
+//     setError("");
+//     setAqi(null);
+
+//     try {
+//       // Initialize Gemini AI model
+//       const genAI = new GoogleGenerativeAI(GEMINI_API_KEY);
+//       const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+
+//       // Prepare AQI history for the prompt
+//       const aqiHistory = Object.entries(lastSevenDaysAQI)
+//         .map(([date, value]) => `${date}: AQI ${value}`)
+//         .join("\n");
+
+//       // Create the AI prompt
+//       const prompt = `Just give a random AQI for ${city} on ${date} based on past data.
+//       Here is the AQI data for the last 7 days:\n${aqiHistory}`;
+
+//       // Make AI API call
+//       const result = await model.generateContent({
+//         contents: [{ role: "user", parts: [{ text: prompt }] }],
+//         generationConfig: { maxOutputTokens: 100, temperature: 0.7 },
+//       });
+
+//       // Extract and display the AQI result
+//       const predictedAqi =
+//         result.response?.candidates?.[0]?.content?.parts?.[0]?.text || "No data available";
+//       setAqi(predictedAqi);
+//     } catch (err) {
+//       console.error("Error fetching AQI prediction:", err);
+//       setError("Failed to fetch AQI prediction. Please try again.");
+//     } finally {
+//       setLoading(false);
+//     }
+//   };
+
+//   return (
+//     <div style={{ padding: "20px", fontFamily: "Arial, sans-serif" }}>
+//       <h1>AQI Predictor</h1>
+//       <div>
+//         <label>
+//           Enter City:
+//           <input
+//             type="text"
+//             value={city}
+//             onChange={(e) => setCity(e.target.value)}
+//             placeholder="Enter city name"
+//           />
+//         </label>
+//       </div>
+//       <div>
+//         <label>
+//           Select Date:
+//           <input
+//             type="date"
+//             value={date}
+//             onChange={(e) => setDate(e.target.value)}
+//           />
+//         </label>
+//       </div>
+//       <button onClick={handlePrediction} disabled={loading}>
+//         {loading ? "Predicting..." : "Predict AQI"}
+//       </button>
+
+//       {error && <p style={{ color: "red" }}>{error}</p>}
+//       {aqi && (
+//         <div>
+//           <h2>Predicted AQI for {city} on {date}</h2>
+//           <p>{aqi}</p>
+//         </div>
+//       )}
+//     </div>
+//   );
+// };
+
+// export default AQIPredictor;
+
+"use client";
+
+import React, { useState } from "react";
+import { GoogleGenerativeAI } from "@google/generative-ai";
+import { motion } from "framer-motion";
+import { cn } from "@/libs/utils";
+
+const AQIPredictor = () => {
+  const [date, setDate] = useState("");
+  const [city, setCity] = useState("");
+  const [aqi, setAqi] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+
+  // Dummy AQI data for the last 7 days (Replace with real API data if available)
+  const lastSevenDaysAQI = {
+    "2024-03-01": 120,
+    "2024-03-02": 110,
+    "2024-03-03": 105,
+    "2024-03-04": 115,
+    "2024-03-05": 130,
+    "2024-03-06": 125,
+    "2024-03-07": 118,
   };
 
-  // Generate mock AQI data for demonstration
-  const generateMockAqiData = () => {
-    const data = [];
-    const today = new Date();
-    
-    for (let i = 365; i > 0; i--) {
-      const date = new Date(today);
-      date.setDate(date.getDate() - i);
-      
-      data.push({
-        date: date.toISOString().split('T')[0],
-        aqi: Math.floor(Math.random() * 200) + 50,
-        pm25: Math.floor(Math.random() * 100) + 20,
-        pm10: Math.floor(Math.random() * 150) + 30,
-        temperature: Math.floor(Math.random() * 15) + 15,
-        humidity: Math.floor(Math.random() * 40) + 30
-      });
-    }
-    
-    return data;
+  // Replace with a secure environment variable in production
+  const GEMINI_API_KEY = "AIzaSyAn9cyC74o_2v0qflu-tBomvsz-MwPjTk4";
+
+  const getAQIColor = (aqiValue) => {
+    if (!aqiValue || isNaN(parseInt(aqiValue))) return "bg-gray-200";
+    const aqi = parseInt(aqiValue);
+    if (aqi <= 50) return "bg-green-500";
+    if (aqi <= 100) return "bg-yellow-400";
+    if (aqi <= 150) return "bg-orange-500";
+    if (aqi <= 200) return "bg-red-500";
+    if (aqi <= 300) return "bg-purple-600";
+    return "bg-rose-900";
   };
 
-  // Function to make prediction
-  const predictAQI = async () => {
-    if (!apiKey) {
-      setError("Please enter your Gemini API key");
+  const getAQICategory = (aqiValue) => {
+    if (!aqiValue || isNaN(parseInt(aqiValue))) return "Unknown";
+    const aqi = parseInt(aqiValue);
+    if (aqi <= 50) return "Good";
+    if (aqi <= 100) return "Moderate";
+    if (aqi <= 150) return "Unhealthy for Sensitive Groups";
+    if (aqi <= 200) return "Unhealthy";
+    if (aqi <= 300) return "Very Unhealthy";
+    return "Hazardous";
+  };
+
+  const handlePrediction = async () => {
+    if (!date || !city) {
+      setError("Please select a date and enter a city");
       return;
     }
 
-    if (aqiData.length === 0) {
-      setError("Please upload AQI data first");
-      return;
-    }
+    setLoading(true);
+    setError("");
+    setAqi(null);
 
-    setIsLoading(true);
-    setError(null);
-    
     try {
-      // In a real implementation, this would call the Gemini API
-      // For this example, we'll simulate a prediction
-      await new Promise(resolve => setTimeout(resolve, 1500));
-      
-      const lastAqi = aqiData[aqiData.length - 1].aqi;
-      const predictedAqi = Math.round(lastAqi * (0.9 + Math.random() * 0.2));
-      
-      setPrediction({
-        value: predictedAqi,
-        date: getTomorrowDate(),
-        explanation: `Based on historical patterns, particularly the trend over the last 7 days, I predict tomorrow's AQI will be ${predictedAqi}. This takes into account seasonal variations and recent weather conditions.`
+      // Initialize Gemini AI model
+      const genAI = new GoogleGenerativeAI(GEMINI_API_KEY);
+      const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+
+      // Prepare AQI history for the prompt
+      const aqiHistory = Object.entries(lastSevenDaysAQI)
+        .map(([date, value]) => `${date}: AQI ${value}`)
+        .join("\n");
+
+      // Create the AI prompt
+      const prompt = `Just give a random AQI for ${city} on ${date} based on past data.
+      Here is the AQI data for the last 7 days:\n${aqiHistory}`;
+
+      // Make AI API call
+      const result = await model.generateContent({
+        contents: [{ role: "user", parts: [{ text: prompt }] }],
+        generationConfig: { maxOutputTokens: 100, temperature: 0.7 },
       });
+
+      // Extract and display the AQI result
+      const predictedAqi =
+        result.response?.candidates?.[0]?.content?.parts?.[0]?.text || "No data available";
+      setAqi(predictedAqi);
     } catch (err) {
-      setError("Failed to get prediction: " + err.message);
+      console.error("Error fetching AQI prediction:", err);
+      setError("Failed to fetch AQI prediction. Please try again.");
     } finally {
-      setIsLoading(false);
+      setLoading(false);
     }
   };
 
-  const getTomorrowDate = () => {
-    const tomorrow = new Date();
-    tomorrow.setDate(tomorrow.getDate() + 1);
-    return tomorrow.toISOString().split('T')[0];
-  };
-
-  const handleFileUpload = (event) => {
-    const file = event.target.files[0];
-    if (file) {
-      parseExcelFile(file);
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1
+      }
     }
   };
 
-  // Get chart data for last 30 days
-  const getRecentChartData = () => {
-    return aqiData.slice(-30);
+  const itemVariants = {
+    hidden: { y: 20, opacity: 0 },
+    visible: {
+      y: 0,
+      opacity: 1,
+      transition: { type: "spring", stiffness: 100 }
+    }
   };
+
+  const buttonVariants = {
+    idle: { scale: 1 },
+    hover: { scale: 1.05 },
+    tap: { scale: 0.95 }
+  };
+
+  const resultVariants = {
+    hidden: { opacity: 0, height: 0 },
+    visible: { 
+      opacity: 1, 
+      height: "auto",
+      transition: { duration: 0.5 }
+    }
+  };
+
+  // Extract numeric AQI value for visualization
+  const numericAqi = aqi ? parseInt(aqi.match(/\d+/)?.[0] || 0) : 0;
 
   return (
-    <div className="p-6 space-y-6">
-      <Card>
-        <CardHeader>
-          <CardTitle>AQI Prediction Dashboard</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="grid gap-6 md:grid-cols-2">
-            <div className="space-y-4">
-              <div className="flex flex-col space-y-2">
-                <label htmlFor="apiKey">Gemini API Key</label>
-                <Input 
-                  id="apiKey"
-                  type="password"
-                  placeholder="Enter your API key"
-                  value={apiKey}
-                  onChange={(e) => setApiKey(e.target.value)}
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-12 px-4 sm:px-6 lg:px-8 flex items-center justify-center">
+      <motion.div 
+        className="max-w-md w-full bg-white rounded-2xl shadow-xl overflow-hidden"
+        initial={{ opacity: 0, y: 50 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+      >
+        <div className="bg-gradient-to-r from-blue-600 to-indigo-700 px-6 py-8">
+          <motion.h1 
+            className="text-2xl font-bold text-white"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.2 }}
+          >
+            AQI Predictor
+          </motion.h1>
+          <motion.p 
+            className="mt-2 text-blue-100"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.3 }}
+          >
+            Forecast air quality for any location
+          </motion.p>
+        </div>
+
+        <motion.div 
+          className="px-6 py-8"
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+        >
+          <motion.div variants={itemVariants} className="mb-6">
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Enter City
+            </label>
+            <motion.input
+              whileFocus={{ scale: 1.01 }}
+              type="text"
+              value={city}
+              onChange={(e) => setCity(e.target.value)}
+              placeholder="e.g., New York, London, Tokyo"
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all"
+            />
+          </motion.div>
+
+          <motion.div variants={itemVariants} className="mb-8">
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Select Date
+            </label>
+            <motion.input
+              whileFocus={{ scale: 1.01 }}
+              type="date"
+              value={date}
+              onChange={(e) => setDate(e.target.value)}
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all"
+            />
+          </motion.div>
+
+          <motion.button
+            variants={buttonVariants}
+            initial="idle"
+            whileHover="hover"
+            whileTap="tap"
+            onClick={handlePrediction}
+            disabled={loading}
+            className="w-full bg-gradient-to-r from-blue-600 to-indigo-700 text-white py-3 px-4 rounded-lg font-medium shadow-md hover:shadow-lg transition-all disabled:opacity-70"
+          >
+            {loading ? (
+              <div className="flex items-center justify-center">
+                <motion.div
+                  animate={{ rotate: 360 }}
+                  transition={{ repeat: Infinity, duration: 1, ease: "linear" }}
+                  className="mr-2 h-5 w-5 border-2 border-t-transparent border-white rounded-full"
                 />
+                <span>Predicting...</span>
               </div>
-              
-              <div className="flex items-center space-x-2">
-                <div className="grid w-full max-w-sm items-center gap-1.5">
-                  <label htmlFor="fileUpload" className="text-sm">Upload AQI Data (XLS/XLSX)</label>
-                  <div className="flex items-center gap-2">
-                    <Input 
-                      id="fileUpload" 
-                      type="file" 
-                      accept=".xls,.xlsx" 
-                      onChange={handleFileUpload}
-                    />
-                    <Upload className="h-4 w-4" />
-                  </div>
-                </div>
-              </div>
-              
-              <Button 
-                onClick={predictAQI} 
-                disabled={isLoading || aqiData.length === 0}
-                className="w-full"
-              >
-                {isLoading ? "Processing..." : "Predict Next Day AQI"}
-              </Button>
-              
-              {error && (
-                <div className="bg-red-50 p-3 rounded-md border border-red-200 flex items-start gap-2">
-                  <AlertTriangle className="h-5 w-5 text-red-500 mt-0.5" />
-                  <p className="text-sm text-red-700">{error}</p>
-                </div>
-              )}
-            </div>
-            
-            <div>
-              {prediction ? (
-                <div className="bg-blue-50 p-4 rounded-lg border border-blue-100">
-                  <h3 className="text-lg font-medium mb-2">AQI Prediction for {prediction.date}</h3>
-                  <div className="text-3xl font-bold mb-2">{prediction.value}</div>
-                  <p className="text-sm text-gray-600">{prediction.explanation}</p>
-                </div>
-              ) : (
-                <div className="bg-gray-50 p-4 rounded-lg border border-gray-200 h-full flex items-center justify-center">
-                  <div className="text-center">
-                    <FileText className="h-8 w-8 text-gray-400 mx-auto mb-2" />
-                    <p className="text-gray-500">Upload data and generate a prediction</p>
-                  </div>
-                </div>
-              )}
-            </div>
-          </div>
-          
-          {aqiData.length > 0 && (
-            <div className="mt-6">
-              <h3 className="text-lg font-medium mb-4">Historical AQI Data (Last 30 Days)</h3>
-              <div className="h-64">
-                <ResponsiveContainer width="100%" height="100%">
-                  <LineChart data={getRecentChartData()}>
-                    <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis dataKey="date" />
-                    <YAxis />
-                    <Tooltip />
-                    <Legend />
-                    <Line type="monotone" dataKey="aqi" stroke="#8884d8" name="AQI" />
-                    <Line type="monotone" dataKey="pm25" stroke="#82ca9d" name="PM2.5" />
-                  </LineChart>
-                </ResponsiveContainer>
-              </div>
-              
-              <div className="mt-6 overflow-x-auto">
-                <Table>
-                  <TableHeader>
-                    <TableRow>
-                      <TableHead>Date</TableHead>
-                      <TableHead>AQI</TableHead>
-                      <TableHead>PM2.5</TableHead>
-                      <TableHead>PM10</TableHead>
-                      <TableHead>Temperature</TableHead>
-                      <TableHead>Humidity</TableHead>
-                    </TableRow>
-                  </TableHeader>
-                  <TableBody>
-                    {aqiData.slice(-5).map((day) => (
-                      <TableRow key={day.date}>
-                        <TableCell>{day.date}</TableCell>
-                        <TableCell>{day.aqi}</TableCell>
-                        <TableCell>{day.pm25}</TableCell>
-                        <TableCell>{day.pm10}</TableCell>
-                        <TableCell>{day.temperature}°C</TableCell>
-                        <TableCell>{day.humidity}%</TableCell>
-                      </TableRow>
-                    ))}
-                  </TableBody>
-                </Table>
-              </div>
-            </div>
+            ) : (
+              "Predict AQI"
+            )}
+          </motion.button>
+
+          {error && (
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="mt-4 text-sm text-red-600 bg-red-50 px-4 py-3 rounded-lg"
+            >
+              {error}
+            </motion.div>
           )}
-        </CardContent>
-      </Card>
+
+          {aqi && (
+            <motion.div
+              variants={resultVariants}
+              initial="hidden"
+              animate="visible"
+              className="mt-8 border-t border-gray-100 pt-6"
+            >
+              <h2 className="text-lg font-semibold text-gray-800">
+                Predicted AQI for {city} on {date}
+              </h2>
+              
+              <div className="mt-4 flex flex-col items-center">
+                <motion.div 
+                  className={`w-32 h-32 rounded-full flex items-center justify-center text-white text-2xl font-bold ${getAQIColor(numericAqi)}`}
+                  initial={{ scale: 0 }}
+                  animate={{ scale: 1 }}
+                  transition={{ type: "spring", stiffness: 200, damping: 15 }}
+                >
+                  {numericAqi}
+                </motion.div>
+                
+                <motion.p 
+                  className={cn("mt-3 font-medium text-lg", getAQIColor(numericAqi))}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 0.3 }}
+                >
+                  {getAQICategory(numericAqi)}
+                </motion.p>
+                
+                <motion.div 
+                  className="mt-4 text-sm text-gray-600 bg-gray-50 p-4 rounded-lg w-full"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 0.4 }}
+                >
+                  <p className="italic">{aqi}</p>
+                </motion.div>
+              </div>
+              
+              <motion.div 
+                className="mt-6 text-xs text-gray-500"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.5 }}
+              >
+                <p>Data based on historical AQI records and AI prediction.</p>
+              </motion.div>
+            </motion.div>
+          )}
+
+          <motion.div 
+            className="mt-6 grid grid-cols-2 gap-3"
+            variants={containerVariants}
+          >
+            {Object.entries(lastSevenDaysAQI).slice(0, 4).map(([date, value], index) => (
+              <motion.div 
+                key={date}
+                variants={itemVariants}
+                className="bg-gray-50 rounded-lg p-2 text-xs"
+              >
+                <div className="text-gray-500">{date}</div>
+                <div className="font-medium text-gray-800">AQI: {value}</div>
+              </motion.div>
+            ))}
+          </motion.div>
+        </motion.div>
+      </motion.div>
     </div>
   );
 };
 
-export default AQIPredictionDashboard;
+export default AQIPredictor;
