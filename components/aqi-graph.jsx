@@ -22,6 +22,7 @@ export const AQIGraph = () => {
         bangalore: { lat: 12.9716, lon: 77.5946 },
         newyork: { lat: 40.7128, lon: -74.0060 },
         london: { lat: 51.5074, lon: -0.1278 },
+        paris : {lat : 37.7749, lon : -122.4194}
     };
 
     const fetchAQIData = async () => {

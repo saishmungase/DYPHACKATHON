@@ -21,13 +21,13 @@
         </div>
         <div className="mt-4">
           <div className="w-full h-2 bg-gray-200 rounded-full overflow-hidden">
-            <div className={`h-full ${aqiInfo.color}`} style={{ width: `${Math.min(aqi / 3, 100)}%` }}></div>
+            <div className={`h-full ${aqiInfo.color}`} style={{ width: `${(aqi / 5) * 100}%`}}></div>
           </div>
           <div className="flex justify-between text-xs text-gray-500 mt-1">
             <span>0</span>
-            <span>100</span>
-            <span>200</span>
-            <span>300+</span>
+            <span>1</span>
+            <span>2</span>
+            <span>3+</span>
           </div>
         </div>
       </div>
