@@ -3,7 +3,7 @@ import { useState } from "react";
 
 export default function useWhatsApp() {
     const [to, setTo] = useState("+917517481001");
-    const [name, setName] = useState("Atharv");
+    const [name, setName] = useState("Atharva");
     const [status, setStatus] = useState("");
 
     const sendMessage = async () => {
