@@ -253,7 +253,6 @@ export default function ShoppingPlatform() {
 
   // Define categories and their icons
   const categories = {
-    home: { name: "Home", icon: <Home className="w-6 h-6" /> },
     masks: { name: "Masks", icon: <Mask className="w-6 h-6" /> },
     purifiers: { name: "Air Purifiers", icon: <Fan className="w-6 h-6" /> },
     conditioners: { name: "Air Conditioners", icon: <Thermometer className="w-6 h-6" /> },
