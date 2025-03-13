@@ -3,7 +3,7 @@
 import axios from "axios";
 
 async function getCityInfo(city) {
-    const valueGrid = await axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=fcfe29295e96d71c262ff76d89552bab`);
+    const valueGrid = await axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${process.env.WATHERAPI}`);
     const data = valueGrid.data;
     const cityName = city.charAt(0).toUpperCase() + city.slice(1);
     const result = {

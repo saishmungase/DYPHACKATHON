@@ -30,7 +30,7 @@ export const AQIGraph = () => {
         try {
             const { lat, lon } = cities[localStorage.getItem("cityName").toLowerCase()];
             const response = await fetch(
-                `https://api.openweathermap.org/data/2.5/air_pollution?lat=${lat}&lon=${lon}&appid=${API_KEY}`
+                `https://api.openweathermap.org/data/2.5/air_pollution?lat=${lat}&lon=${lon}&appid=${process.env.WATHERAPI}`
             );
             const result = await response.json();
             const aqi = result.list[0]?.main?.aqi || 1;

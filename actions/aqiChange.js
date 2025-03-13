@@ -3,7 +3,7 @@ export default async function sendWhatsAppMessage(aqi) {
     const name = "Atharv";
 
     const myHeaders = new Headers();
-    myHeaders.append("Authorization", "App 8686c43d3ecb2c09acf4a2e63991157a-efcecbe1-ccec-434b-89bf-56ad397e4f99");
+    myHeaders.append("Authorization", `App ${process.env.MESSAGEAPI}`);
     myHeaders.append("Content-Type", "application/json");
     myHeaders.append("Accept", "application/json");
 
